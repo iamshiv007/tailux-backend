@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const dotenv = require("dotenv").config()
 
 app.use(express.json())
 
@@ -11,8 +12,7 @@ app.use("/api", routes)
 const connect = require("./database/connect")
 connect()
 
-
-const PORT = 5000
+const PORT = process.env.PORT || 4000
 
 app.listen(PORT, (req, res) => {
     console.log(`Server is connected on http://localhost:${PORT}`)

@@ -75,6 +75,19 @@ const userController = {
 
     },
 
+    logout: async (req, res) => {
+        try {
+            res.cookie("token", null, {
+                expires: new Date(Date.now()),
+                httpOnly: true
+            }).status(200).json({ success: true, message: "Logged out" })
+
+        } catch (error) {
+            res.status(500).json(error)
+        }
+
+    },
+
     getUserDetails: async (req, res) => {
         try {
             res.status(200).json({ success: true, user: req.user })

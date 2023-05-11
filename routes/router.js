@@ -9,4 +9,7 @@ router.use('/', productRouter)
 const addressRouter = require('./address')
 router.use('/', addressRouter)
 
+const sizeRouter = require('./size')
+router.use("/", sizeRouter)
+
 module.exports = router

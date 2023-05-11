@@ -73,7 +73,7 @@ const userController = {
 
             res.cookie('token', token, options).status(200).json({ success: true, user })
         } catch (error) {
-            res.status(500).json({ error })
+            res.status(500).json(error)
         }
 
 

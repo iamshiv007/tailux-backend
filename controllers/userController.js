@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
 const userController = {
+
+    // 1. Register User
     register: async (req, res) => {
         try {
 
@@ -19,6 +21,7 @@ const userController = {
             if (userExist)
                 return res.status(400).json({ success: false, error: "User with this email address already exist" })
 
+            // Password hashed
             const salt = await bcrypt.genSalt(10)
             const secPass = await bcrypt.hash(password, salt)
 
@@ -40,6 +43,7 @@ const userController = {
         }
     },
 
+    // 2. Login User
     login: async (req, res) => {
 
         try {
@@ -75,6 +79,7 @@ const userController = {
 
     },
 
+    // 3. Logout User
     logout: async (req, res) => {
         try {
             res.cookie("token", null, {
@@ -88,6 +93,7 @@ const userController = {
 
     },
 
+    // 4. User Details
     getUserDetails: async (req, res) => {
         try {
             res.status(200).json({ success: true, user: req.user })
@@ -96,11 +102,12 @@ const userController = {
         }
     },
 
+    // 5. Update Profile
     updateProfile: async (req, res) => {
         try {
             const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body)
 
-            res.status(200).json({ success: true, messege:'Profile Updated' })
+            res.status(200).json({ success: true, messege: 'Profile Updated' })
         } catch (error) {
             res.status(500).json(error)
         }

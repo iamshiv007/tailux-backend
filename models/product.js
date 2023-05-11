@@ -27,7 +27,6 @@ const productSchema = new mongoose.Schema({
     },
     stock: {
         type: Number,
-        required: [true, "Please Enter Product Stock"],
         default: 1
     },
     numOfReviews: {
@@ -42,7 +41,7 @@ const productSchema = new mongoose.Schema({
                 required: true
             },
             name: {
-                name: String,
+                type: String,
                 required: true
             },
             rating: {
@@ -51,7 +50,7 @@ const productSchema = new mongoose.Schema({
             },
             comment: {
                 type: String,
-                required: True
+                required: true
             }
         }
     ],

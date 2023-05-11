@@ -1,7 +1,21 @@
 const router = require("express").Router()
+const multer = require("multer")
 
 const userController = require("../controllers/userController")
 const { isAuthenticatedUser } = require("../middleware/auth")
+
+// Image upload
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, './avatars')
+//     },
+//     fileName: function (req, file, cb) {
+//         const newName = Date.now() + '-' + file.originalname
+//         cb(null, newName)
+//     }
+// })
+
+// const upload = multer({ storage })
 
 
 router.route("/register").post((req, res) => userController.register(req, res))

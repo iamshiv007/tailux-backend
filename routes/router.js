@@ -6,4 +6,7 @@ router.use("/", userRouter)
 const productRouter = require('./product')
 router.use('/', productRouter)
 
+const addressRouter = require('./address')
+router.use('/', addressRouter)
+
 module.exports = router

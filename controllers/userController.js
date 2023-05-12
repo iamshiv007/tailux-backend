@@ -7,21 +7,20 @@ const userController = {
     // 1. Register User
     register: async (req, res) => {
         try {
-            console.log(req.file, req.body)
             const { mobile, email, password, confirmPassword, ...rest } = req.body
 
             const avatar = req.file.filename
 
-            if (!mobile || !email || !password || !confirmPassword)
-                return res.status(400).json({ success: false, error: "Please fill all required field" })
+            // if (!mobile || !email || !password || !confirmPassword)
+            //     return res.status(400).json({ success: false, error: "Please fill all required field" })
 
             if (password !== confirmPassword)
                 return res.status(400).json({ success: false, error: "Password does not match" })
 
-            const userExist = await User.findOne({ email: req.body.email })
+            // const userExist = await User.findOne({ email: req.body.email })
 
-            if (userExist)
-                return res.status(400).json({ success: false, error: "User with this email address already exist" })
+            // if (userExist)
+            //     return res.status(400).json({ success: false, error: "User with this email address already exist" })
 
             // Password hashed
             const salt = await bcrypt.genSalt(10)

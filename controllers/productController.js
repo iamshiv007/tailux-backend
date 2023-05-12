@@ -2,7 +2,9 @@ const Product = require('../models/product')
 
 // 1. New Product -- Admin
 exports.createProduct = (req, res) => {
-    Product.create(req.body)
+    const images = req.files.map((file) => file.filename)
+
+    Product.create({...req.body, images})
         .then((product) => res.status(201).json({ success: true, product }))
         .catch((err) => res.status(500).json(err))
 }

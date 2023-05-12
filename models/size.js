@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const sizeSchema = new mongoose.Schema({
-    top: {
+    top: [{
         shoulder: {
             type: String,
             required: true
@@ -26,9 +26,9 @@ const sizeSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    }
+    }]
     ,
-    bottom: {
+    bottom: [{
         waist: {
             type: String,
             required: true
@@ -53,7 +53,7 @@ const sizeSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-    },
+    }],
     user: {
         type: mongoose.Schema.ObjectId,
         ref: "User",

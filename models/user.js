@@ -4,16 +4,6 @@ const userSchema = new mongoose.Schema({
     userName:{
         type:String
     },
-    avatar:{
-        type:String
-    },
-    roll:{
-        type:String
-    },
-    mobile: {
-        type: Number,
-        required: true
-    },
     email: {
         type: String,
         required: true,
@@ -23,6 +13,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: [6, "Password must be 6 characters"]
+    },
+    mobile: {
+        type: Number,
+        required: true
+    },
+    gender:{
+        type:String,
+    },
+    avatar:{
+        type:String
+    },
+    roll:{
+        type:String
     }
 })
 

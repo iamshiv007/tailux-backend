@@ -21,4 +21,8 @@ router.use("/", sizeRouter)
 const cartRouter = require('./cart')
 router.use("/", cartRouter)
 
+// Order
+const orderRouter = require('./order')
+router.use('/', orderRouter)
+
 module.exports = router

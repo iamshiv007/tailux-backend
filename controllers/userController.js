@@ -2,50 +2,49 @@ const User = require("../models/user")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
-const userController = {
 
-    // 1. Register User
-    register: async (req, res) => {
-        try {
-            const { mobile, email, password, confirmPassword, ...rest } = req.body
+// 1. Register User
+exports.register = async (req, res) => {
+    try {
+        const { mobile, email, password, confirmPassword, ...rest } = req.body
 
-            const avatar = req.file.filename
+        // const avatar = req.file ? req.file.filename : ""
 
-            // if (!mobile || !email || !password || !confirmPassword)
-            //     return res.status(400).json({ success: false, error: "Please fill all required field" })
+        if (!mobile || !email || !password || !confirmPassword)
+            return res.status(400).json({ success: false, error: "Please fill all required field" })
 
-            if (password !== confirmPassword)
-                return res.status(400).json({ success: false, error: "Password does not match" })
+        if (password !== confirmPassword)
+            return res.status(400).json({ success: false, error: "Password does not match" })
 
-            // const userExist = await User.findOne({ email: req.body.email })
+        // const userExist = await User.findOne({ email: req.body.email })
 
-            // if (userExist)
-            //     return res.status(400).json({ success: false, error: "User with this email address already exist" })
+        // if (userExist)
+        //     return res.status(400).json({ success: false, error: "User with this email address already exist" })
 
-            // Password hashed
-            const salt = await bcrypt.genSalt(10)
-            const secPass = await bcrypt.hash(password, salt)
+        // Password hashed
+        const salt = await bcrypt.genSalt(10)
+        const secPass = await bcrypt.hash(password, salt)
 
-            const user = await User.create({ mobile, email, password: secPass, ...rest, avatar })
+        const user = await User.create({ mobile, email, password: secPass, ...rest })
 
-            const token = await jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE })
+        const token = await jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE })
 
-            const options = {
-                expires: new Date(
-                    Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-                ),
-                httpOnly: true
-            }
-
-            res.cookie('token', token, options).status(201).json({ success: true, user })
-
-        } catch (error) {
-            res.status(500).json(error)
+        const options = {
+            expires: new Date(
+                Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+            ),
+            // httpOnly: true
         }
-    },
+
+        res.cookie('token', token, options).status(201).json({ success: true, user })
+
+    } catch (error) {
+        res.status(500).json(error)
+    }
+},
 
     // 2. Login User
-    login: async (req, res) => {
+    exports.login = async (req, res) => {
 
         try {
             const { email, password } = req.body
@@ -81,7 +80,7 @@ const userController = {
     },
 
     // 3. Logout User
-    logout: async (req, res) => {
+    exports.logout = async (req, res) => {
         try {
             res.cookie("token", null, {
                 expires: new Date(Date.now()),
@@ -95,7 +94,7 @@ const userController = {
     },
 
     // 4. User Details
-    getUserDetails: async (req, res) => {
+    exports.getUserDetails = async (req, res) => {
         try {
             res.status(200).json({ success: true, user: req.user })
         } catch (error) {
@@ -104,7 +103,7 @@ const userController = {
     },
 
     // 5. Update Profile
-    updateProfile: async (req, res) => {
+    exports.updateProfile = async (req, res) => {
         try {
             const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body)
 
@@ -113,6 +112,3 @@ const userController = {
             res.status(500).json(error)
         }
     }
-}
-
-module.exports = userController

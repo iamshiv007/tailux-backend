@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 
-router.route("/register").post(register)
+router.route("/register").post(upload.single('avatar'), register)
 router.route("/login").post(login)
 router.route("/me").get(isAuthenticatedUser, getUserDetails)
 router.route("/logout").get(logout)

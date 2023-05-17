@@ -13,6 +13,10 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Please Enter Product Price"]
     },
+    mrp:{
+        type:Number,
+        required:[true, "Please Enter Product MRP"]
+    },
     ratings: {
         type: Number,
         default: 0

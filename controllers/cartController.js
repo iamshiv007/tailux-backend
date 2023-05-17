@@ -3,8 +3,8 @@ const Cart = require('../models/cart')
 // 1. Add to cart
 exports.addToCart = (req, res) => {
     Cart.create(req.body)
-        .then((cart) => res.stattus(201).json({ success: true, cart }))
-        .catch((err) => res.status(500).json({ succes: false, err }))
+        .then((cart) => res.status(201).json({ success: true, cart }))
+        .catch((err) => res.status(500).json({ success: false, err }))
 }
 
 // 2. Get User Cart List

@@ -8,8 +8,11 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     origin: ['http://localhost:3000'],
-    credentials:true}
+    credentials: true
+}
 ))
+app.use("/avatars", express.static('avatars'))
+app.use("/productImages", express.static('productImages'))
 
 // Routes
 const routes = require('./routes/router')

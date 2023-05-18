@@ -4,16 +4,26 @@ const Product = require('../models/product')
 exports.createProduct = (req, res) => {
     const images = req.files.map((file) => file.filename)
 
-    Product.create({...req.body, images})
+    Product.create({ ...req.body, images })
         .then((product) => res.status(201).json({ success: true, product }))
         .catch((err) => res.status(500).json(err))
 }
 
 // 2. Get All Products
 exports.getAllProducts = (req, res) => {
-    Product.find()
-        .then((products) => res.status(200).json({ success: true, products }))
-        .catch((err) => res.status(500).json(err))
+
+    const { category } = req.body
+
+    if (category) {
+        Product.find({ category })
+            .then((products) => res.status(200).json({ success: true, products }))
+            .catch((err) => res.status(500).json(err))
+    } else {
+        Product.find()
+            .then((products) => res.status(200).json({ success: true, products }))
+            .catch((err) => res.status(500).json(err))
+    }
+
 }
 
 // 3. One Product Details

@@ -33,7 +33,7 @@ exports.register = async (req, res) => {
             expires: new Date(
                 Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
             ),
-            // httpOnly: true
+            httpOnly: true
         }
 
         res.cookie('token', token, options).status(201).json({ success: true, user })
@@ -81,15 +81,11 @@ exports.register = async (req, res) => {
 
     // 3. Logout User
     exports.logout = async (req, res) => {
-        try {
-            res.cookie("token", null, {
-                expires: new Date(Date.now()),
-                httpOnly: true
-            }).status(200).json({ success: true, message: "Logged out" })
 
-        } catch (error) {
-            res.status(500).json(error)
-        }
+        res.cookie("token", null, {
+            expires: new Date(Date.now()),
+            httpOnly: true
+        }).status(200).json({ success: true, message: "Logged out" })
 
     },
 

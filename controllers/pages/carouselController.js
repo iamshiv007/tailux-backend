@@ -6,11 +6,11 @@ exports.newCarousel = (req, res) => {
 
     Carousel.create({ ...req.body, carouselImages })
         .then((carousel) => res.status(201).json({ success: true, carousel }))
-        .catch((errro) => res.status(500).json({ success: false, error }))
+        .catch((error) => res.status(500).json({ success: false, error }))
 }
 
 // 2. Get Carousel by category
-exports.categoryCarousel = (req, res) => {
+exports.carouselByCategory = (req, res) => {
     const { categoryName } = req.params
 
     Carousel.findOne({ category: categoryName })

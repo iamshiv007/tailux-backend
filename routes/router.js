@@ -33,8 +33,8 @@ router.use("/", reviewRouter)
 const pageRouter = require('./page')
 router.use('/', pageRouter)
 
-// Carousel
-const carouselRouter = require('./page/carousel')
-router.use('/', carouselRouter)
+// Deal
+const dealRouter = require('./page/deal')
+router.use('/', dealRouter)
 
 module.exports = router

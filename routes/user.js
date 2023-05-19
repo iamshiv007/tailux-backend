@@ -7,7 +7,7 @@ const { isAuthenticatedUser } = require("../middleware/auth")
 // Image upload
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './avatars')
+        cb(null, './assets/avatars')
     },
     filename: function (req, file, cb) {
         const newName = Date.now() + '-' + file.originalname

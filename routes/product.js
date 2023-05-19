@@ -7,7 +7,7 @@ const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth")
 // Image upload
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './productImages')
+        cb(null, './assets/productImages')
     },
     filename: function (req, file, cb) {
         const newName = Date.now() + '-' + file.originalname

@@ -13,9 +13,9 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Please Enter Product Price"]
     },
-    mrp:{
-        type:Number,
-        required:[true, "Please Enter Product MRP"]
+    discount: {
+        type: Number,
+        required: [true, "Please Enter Product MRP"]
     },
     ratings: {
         type: Number,
@@ -37,27 +37,6 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    reviews: [
-        {
-            user: {
-                type: mongoose.Schema.ObjectId,
-                ref: "User",
-                required: true
-            },
-            name: {
-                type: String,
-                required: true
-            },
-            rating: {
-                type: Number,
-                required: true
-            },
-            comment: {
-                type: String,
-                required: true
-            }
-        }
-    ],
     colors: {
         type: Array,
         required: true

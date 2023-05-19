@@ -29,4 +29,8 @@ router.use('/', orderRouter)
 const pageRouter = require('./page')
 router.use('/', pageRouter)
 
+// review
+const reviewRouter = require('./review')
+router.use("/", reviewRouter)
+
 module.exports = router

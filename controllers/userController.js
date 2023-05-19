@@ -8,7 +8,7 @@ exports.register = async (req, res) => {
     try {
         const { mobile, email, password, confirmPassword, ...rest } = req.body
 
-        // const avatar = req.file ? req.file.filename : ""
+        const avatar = req.file ? req.file.filename : ""
 
         if (!mobile || !email || !password || !confirmPassword)
             return res.status(400).json({ success: false, error: "Please fill all required field" })

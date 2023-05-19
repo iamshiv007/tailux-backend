@@ -25,4 +25,8 @@ router.use("/", cartRouter)
 const orderRouter = require('./order')
 router.use('/', orderRouter)
 
+// Page
+const pageRouter = require('./page')
+router.use('/', pageRouter)
+
 module.exports = router

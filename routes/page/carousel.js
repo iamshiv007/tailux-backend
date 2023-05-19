@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const multer = require('multer')
 const { isAuthenticatedUser, } = require("../../middleware/auth")
-const { newCarousel } = require("../../controllers/pages/carouselController")
+const { newCarousel, allCarousels } = require("../../controllers/pages/carouselController")
 
 // Image upload
 const storage = multer.diskStorage({
@@ -18,5 +18,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 router.route("/carousel/new").post(isAuthenticatedUser, upload.array("carouselImages"), newCarousel)
+router.route("/carousels").get(isAuthenticatedUser, allCarousels)
 
 module.exports = router

@@ -11,8 +11,9 @@ app.use(cors({
     credentials: true
 }
 ))
-app.use("/avatars", express.static('avatars'))
-app.use("/productImages", express.static('productImages'))
+app.use("/avatars", express.static('assets/avatars'))
+app.use("/productImages", express.static('assets/productImages'))
+app.use("/carouselImages", express.static('assets/page/carousel'))
 
 // Routes
 const routes = require('./routes/router')

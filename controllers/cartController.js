@@ -2,7 +2,10 @@ const Cart = require('../models/cart')
 
 // 1. Add to cart
 exports.addToCart = (req, res) => {
-    Cart.create(req.body)
+
+    const userId = req.user._id
+
+    Cart.create({ ...req.body, user: userId })
         .then((cart) => res.status(201).json({ success: true, cart }))
         .catch((err) => res.status(500).json({ success: false, err }))
 }

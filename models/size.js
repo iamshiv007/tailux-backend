@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const sizeSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true
+    },
     top: [{
         shoulder: {
             type: String,
@@ -53,12 +58,7 @@ const sizeSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-    }],
-    user: {
-        type: mongoose.Schema.ObjectId,
-        ref: "User",
-        required: true
-    }
+    }]
 })
 
 module.exports = mongoose.model("Size", sizeSchema)

@@ -1,48 +1,48 @@
 const mongoose = require("mongoose")
 
 const addressSchema = new mongoose.Schema({
-   name:{
-    type:String,
-    required:true
+   user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: true
    },
-   mobileNo:{
-    type:Number,
-    required:true
+   name: {
+      type: String,
+      required: true
    },
-   street:{
-    type:String,
-    required:true
+   mobileNo: {
+      type: Number,
+      required: true
    },
-   pincode:{
-    type:Number,
-    required:true
+   street: {
+      type: String,
+      required: true
    },
-   locality:{
-    type:String,
-    required:true
+   pincode: {
+      type: Number,
+      required: true
    },
-   city:{
-    type:String,
-    required:true
+   locality: {
+      type: String,
+      required: true
    },
-   state:{
-    type:String,
-    required:true
+   city: {
+      type: String,
+      required: true
    },
-   landmark:{
-    type:String,
+   state: {
+      type: String,
+      required: true
    },
-   alternateMobileNo:{
-    type:Number
+   landmark: {
+      type: String,
    },
-   primaryLocation:{
-    type:String,
-    required:true
+   alternateMobileNo: {
+      type: Number
    },
-   user:{
-    type:mongoose.Schema.ObjectId,
-    ref:'User',
-    required:true
+   primaryLocation: {
+      type: String,
+      required: true
    }
 })
 

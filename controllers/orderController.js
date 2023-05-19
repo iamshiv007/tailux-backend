@@ -2,7 +2,9 @@ const Order = require('../models/order')
 
 // 1. Create New Order
 exports.newOrder = (req, res) => {
-    Order.create(req.body)
+    const userId = req.user._id
+
+    Order.create({ ...req.body, user: userId })
         .then((order) => res.status(201).json({ success: true, order }))
         .catch((error) => res.status(500).json({ success: false, error }))
 }

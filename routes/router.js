@@ -25,12 +25,16 @@ router.use("/", cartRouter)
 const orderRouter = require('./order')
 router.use('/', orderRouter)
 
+// review
+const reviewRouter = require('./review')
+router.use("/", reviewRouter)
+
 // Page
 const pageRouter = require('./page')
 router.use('/', pageRouter)
 
-// review
-const reviewRouter = require('./review')
-router.use("/", reviewRouter)
+// Carousel
+const carouselRouter = require('./page/carousel')
+router.use('/', carouselRouter)
 
 module.exports = router

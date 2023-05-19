@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const multer = require('multer')
-const { isAuthenticatedUser, } = require("../../middleware/auth")
-const { newCarousel, allCarousels } = require("../../controllers/pages/carouselController")
+const { isAuthenticatedUser, authorizeRole, } = require("../../middleware/auth")
+const { newCarousel, allCarousels, updateCarousel, deleteCarousel } = require("../../controllers/pages/carouselController")
 
 // Image upload
 const storage = multer.diskStorage({
@@ -17,7 +17,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
-router.route("/carousel/new").post(isAuthenticatedUser, upload.array("carouselImages"), newCarousel)
-router.route("/carousels").get(isAuthenticatedUser, allCarousels)
+router.route("/carousel/new").post(isAuthenticatedUser, authorizeRole, upload.array("carouselImages"), newCarousel)
+router.route("/carousels").get(isAuthenticatedUser, authorizeRole, allCarousels)
+router.route("/carousel/:id").patch(isAuthenticatedUser, authorizeRole, upload.array("carouselImages"), updateCarousel)
+router.route("/carousel/:id").delete(isAuthenticatedUser, authorizeRole, deleteCarousel)
 
 module.exports = router

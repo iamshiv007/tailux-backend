@@ -4,7 +4,7 @@ const Order = require('../models/order')
 exports.newOrder = (req, res) => {
     Order.create(req.body)
         .then((order) => res.status(201).json({ success: true, order }))
-        .catch((err) => res.status(500).json({ success: false, err }))
+        .catch((error) => res.status(500).json({ success: false, error }))
 }
 
 // 2. Get User Orders
@@ -14,5 +14,5 @@ exports.getUserOrders = (req, res) => {
         .populate("product")
         .populate("shippingInfo")
         .then((orders) => res.status(200).json({ success: true, orders }))
-        .catch((err) => res.status(500).json({ success: false, err }))
+        .catch((error) => res.status(500).json({ success: false, error }))
 }

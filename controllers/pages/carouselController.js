@@ -9,10 +9,12 @@ exports.newCarousel = (req, res) => {
         .catch((errro) => res.status(500).json({ success: false, error }))
 }
 
-// 2. Get all Carousel
-exports.allCarousels = (req, res) => {
-    Carousel.find()
-        .then((carousels) => res.status(200).json({ success: true, carousels }))
+// 2. Get Carousel by category
+exports.categoryCarousel = (req, res) => {
+    const { categoryName } = req.params
+
+    Carousel.findOne({ category: categoryName })
+        .then((carousel) => res.status(200).json({ success: true, carousel }))
         .catch((error) => res.status(500).json({ success: false, error }))
 }
 

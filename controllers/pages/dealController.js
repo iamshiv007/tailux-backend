@@ -25,7 +25,7 @@ exports.updateDeal = async (req, res) => {
     const dealImages = req.files.map((file) => file.filename)
 
     try {
-        const updatedDeal = await Deal.findByIdAndUpdate(id, { dealImages })
+        const updatedDeal = await Deal.findByIdAndUpdate(id, req.files.length !== 0 ? { dealImages, ...req.body } : req.body)
 
         if (!updatedDeal)
             return res.status(400).json({ success: false, error: 'Deal Not Found' })

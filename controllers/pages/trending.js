@@ -1,54 +1,53 @@
+const { asyncError } = require("../../middleware/error")
 const Trending = require("../../models/page/trending")
 
 // 1. Create new Trending
-exports.newTrending = (req, res) => {
+exports.newTrending = asyncError(async (req, res) => {
+
     const trendingImages = req.files.map((file) => file.filename)
 
-    Trending.create({ ...req.body, trendingImages })
-        .then((trending) => res.status(201).json({ success: true, trending }))
-        .catch((error) => res.status(500).json({ success: false, error }))
-}
+    const trennding = await Trending.create({ ...req.body, trendingImages })
 
+    res.status(201).json({ success: true, message: "Trending Created", trending })
+
+}
+)
 // 2. Get Trending by category
-exports.trendingByCategory = (req, res) => {
+exports.trendingByCategory = asyncError(async (req, res) => {
+
     const { categoryName } = req.params
 
-    Trending.findOne({ category: categoryName })
-        .then((trending) => res.status(200).json({ success: true, trending }))
-        .catch((error) => res.status(500).json({ success: false, error }))
-}
+    const trending = await Trending.findOne({ category: categoryName })
+
+    res.status(200).json({ success: true, trending })
+
+})
 
 // 3. Update Trending
-exports.updateTrending = async (req, res) => {
+exports.updateTrending = asyncError(async (req, res) => {
 
     const { id } = req.params
     const trendingImages = req.files.map((file) => file.filename)
 
-    try {
-        const updatedTrending = await Trending.findByIdAndUpdate(id, { trendingImages })
+    const updatedTrending = await Trending.findByIdAndUpdate(id, { trendingImages })
 
-        if (!updatedTrending)
-            return res.status(400).json({ success: false, error: 'Trending Not Found' })
-        res.status(200).json({ success: true, trendingUpdated: true })
+    if (!updatedTrending)
+        return errorHandler(res, 404, 'Trending Not Found')
 
-    } catch (error) {
-        res.status(500).json({ success: false, error })
-    }
-}
+    res.status(200).json({ success: true, message: "Trending Updated" })
+
+})
 
 // 4. Delete Trending
 exports.deleteTrending = async (req, res) => {
+
     const { id } = req.params
 
-    try {
-        const deletedTrending = await Trending.findByIdAndDelete(id)
+    const deletedTrending = await Trending.findByIdAndDelete(id)
 
-        if (!deletedTrending)
-            return res.status(400).json({ success: false, error: 'Trending Not Found' })
+    if (!deletedTrending)
+        return errorHandler(res, 404, 'Trending Not Found')
 
-        res.status(200).json({ success: true, trendingDeleted: true })
+    res.status(200).json({ success: true, message: "Trending deleted" })
 
-    } catch (error) {
-        res.status(500).json({ success: false, error })
-    }
 }

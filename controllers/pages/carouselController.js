@@ -1,54 +1,51 @@
+const { asyncError, errorHandler } = require("../../middleware/error")
 const Carousel = require("../../models/page/carousel")
 
 // 1. Create new Carousel
-exports.newCarousel = (req, res) => {
+exports.newCarousel = asyncError(async (req, res) => {
+
     const carouselImages = req.files.map((file) => file.filename)
 
-    Carousel.create({ ...req.body, carouselImages })
-        .then((carousel) => res.status(201).json({ success: true, carousel }))
-        .catch((error) => res.status(500).json({ success: false, error }))
-}
+    const carousel = await Carousel.create({ ...req.body, carouselImages })
+
+    res.status(201).json({ success: true, message: "Carousel Created", carousel })
+
+})
 
 // 2. Get Carousel by category
-exports.carouselByCategory = (req, res) => {
+exports.carouselByCategory = asyncError(async (req, res) => {
+
     const { categoryName } = req.params
 
-    Carousel.findOne({ category: categoryName })
-        .then((carousel) => res.status(200).json({ success: true, carousel }))
-        .catch((error) => res.status(500).json({ success: false, error }))
-}
+    const carousel = await Carousel.findOne({ category: categoryName })
+
+    res.status(200).json({ success: true, carousel })
+})
 
 // 3. Update Carousel
-exports.updateCarousel = async (req, res) => {
+exports.updateCarousel = asyncError(async (req, res) => {
 
     const { id } = req.params
     const carouselImages = req.files.map((file) => file.filename)
 
-    try {
-        const updatedCarousel = await Carousel.findByIdAndUpdate(id, { carouselImages })
+    const updatedCarousel = await Carousel.findByIdAndUpdate(id, { carouselImages })
 
-        if (!updatedCarousel)
-            return res.status(400).json({ success: false, error: 'Carousel Not Found' })
-        res.status(200).json({ success: true, carouselUpdated: true })
+    if (!updatedCarousel)
+        return errorHandler(res, 404, 'Carousel Not Found')
 
-    } catch (error) {
-        res.status(500).json({ success: false, error })
-    }
-}
+    res.status(200).json({ success: true, message: 'Carousel Updated' })
+
+})
 
 // 4. Delete Carousel
-exports.deleteCarousel = async (req, res) => {
+exports.deleteCarousel = asyncError(async (req, res) => {
     const { id } = req.params
 
-    try {
-        const deletedCarousel = await Carousel.findByIdAndDelete(id)
+    const deletedCarousel = await Carousel.findByIdAndDelete(id)
 
-        if (!deletedCarousel)
-            return res.status(400).json({ success: false, error: 'Carousel Not Found' })
+    if (!deletedCarousel)
+        return errorHandler(res, 404, 'Carousel Not Found')
 
-        res.status(200).json({ success: true, carouselDeleted: true })
+    res.status(200).json({ success: true, message: "Carousel deleted" })
 
-    } catch (error) {
-        res.status(500).json({ success: false, error })
-    }
-}
+})

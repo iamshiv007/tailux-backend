@@ -1,44 +1,44 @@
+const { asyncError, errorHandler } = require('../middleware/error')
 const Size = require('../models/size')
 
 // 1. Create New Size
-exports.newSize = (req, res) => {
+exports.newSize = asyncError(async (req, res) => {
+
     const { ...data } = req.body
     const userId = req.user._id
 
-    Size.create({ ...data, user: userId })
-        .then((size) => res.status(201).json({ success: true, size }))
-        .catch((err) => res.status(500).json(err))
-}
+    const size = await Size.create({ ...data, user: userId })
 
-exports.getUserSizes = (req, res) => {
+    res.status(201).json({ success: true, message: "Size Created", size })
 
-    Size.find({ user: req.user.id })
-        .then((sizes) => res.status(200).json({ success: true, sizes }))
-        .catch((err) => res.status(500).json(err))
-}
+})
 
-exports.deleteSize = async (req, res) => {
-    try {
-        const size = await Size.findByIdAndDelete(req.params.id)
+exports.getUserSizes = asyncError(async (req, res) => {
 
-        if (!size)
-            return res.status(404).json({ success: false, error: "Size Not Found" })
+    const sizes = await Size.find({ user: req.user.id })
 
-        res.status(200).json({ success: true, message: "Size Deleted" })
-    } catch (error) {
-        res.status(500).json(error)
-    }
-}
+    res.status(200).json({ success: true, sizes })
 
-exports.updateSize = async (req, res) => {
-    try {
-        const size = await Size.findByIdAndUpdate(req.params.id, req.body)
+})
 
-        if (!size)
-            return res.status(404).json({ success: false, error: "Size Not Found" })
+exports.deleteSize = asyncError(async (req, res) => {
 
-        res.status(200).json({ success: true, message: "Size Updated" })
-    } catch (error) {
-        res.status(500).json(error)
-    }
-}
+    const size = await Size.findByIdAndDelete(req.params.id)
+
+    if (!size)
+        return errorHandler(res, 404, "Size Not Found")
+
+    res.status(200).json({ success: true, message: "Size Deleted" })
+
+})
+
+exports.updateSize = asyncError(async (req, res) => {
+
+    const size = await Size.findByIdAndUpdate(req.params.id, req.body)
+
+    if (!size)
+        return errorHandler(res, 404, "Size Not Found")
+
+    res.status(200).json({ success: true, message: "Size Updated" })
+
+})

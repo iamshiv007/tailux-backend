@@ -34,11 +34,15 @@ const pageRouter = require('./page')
 router.use('/', pageRouter)
 
 // Deal
+const carouselRouter = require('./page/carousel')
+router.use('/', carouselRouter)
+
+// Deal
 const dealRouter = require('./page/deal')
 router.use('/', dealRouter)
 
 // trending
-const trendingRouter = require('./page/deal')
+const trendingRouter = require('./page/trending')
 router.use('/', trendingRouter)
 
 module.exports = router

@@ -14,6 +14,8 @@ app.use(cors({
 app.use("/avatars", express.static('assets/avatars'))
 app.use("/productImages", express.static('assets/productImages'))
 app.use("/carouselImages", express.static('assets/page/carousel'))
+app.use("/dealImages", express.static('assets/page/deal'))
+app.use("/trendingImages", express.static('assets/page/trending'))
 
 // Routes
 const routes = require('./routes/router')

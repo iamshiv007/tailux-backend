@@ -1,16 +1,24 @@
+const { asyncError, errorHandler } = require('../middleware/error')
 const Product = require('../models/product')
 
 // 1. New Product -- Admin
-exports.createProduct = (req, res) => {
+exports.createProduct = asyncError((req, res) => {
+
+
     const images = req.files.map((file) => file.filename)
+
+    const { name, description, price, discount, ratings, category, stock, numOfReviews, colors, sizes } = req.body
+
+    if (!name || !description || !price || !discount || !ratings || !category || !stock || !numOfReviews || !colors || !sizes || images.length === 0)
+        return errorHandler(res, 400, "Please fill all required fields")
 
     Product.create({ ...req.body, images })
         .then((product) => res.status(201).json({ success: true, product }))
         .catch((err) => res.status(500).json(err))
-}
+})
 
 // 2. Get All Products
-exports.getAllProducts = (req, res) => {
+exports.getAllProducts = asyncError((req, res) => {
 
     const { category } = req.body
 
@@ -24,49 +32,39 @@ exports.getAllProducts = (req, res) => {
             .catch((err) => res.status(500).json(err))
     }
 
-}
+})
 
 // 3. One Product Details
-exports.getOneProductDetails = async (req, res) => {
-    try {
-        const product = await Product.findById(req.params.id)
-        if (!product)
-            return res.status(404).json({ success: false, error: "Product Not Found" })
+exports.getOneProductDetails = asyncError(async (req, res) => {
+
+    const product = await Product.findById(req.params.id)
+    if (!product)
+        return errorHandler(res, 404, "Product Not Found")
 
         res.status(200).json({ success: true, product })
 
-    } catch (error) {
-        res.status(500).json(error)
-
-    }
-}
+})
 
 // 4. Update Product -- Admin
-exports.updateProduct = async (req, res) => {
+exports.updateProduct = asyncError(async (req, res) => {
 
-    try {
-        const product = await Product.findByIdAndUpdate(req.params.id, req.body)
-        if (!product)
-            return res.status(404).json({ success: false, error: "Product Not Found" })
+    const images = req.files.map((file) => file.filename)
 
-        res.status(200).json({ success: true, message: "Product Updated" })
+    const product = await Product.findByIdAndUpdate(req.params.id, req.files.length !== 0 ? { ...req.body, images } : req.body)
+    if (!product)
+        return errorHandler(res, 404, "Product Not Found")
 
-    } catch (error) {
-        res.status(500).json(error)
-    }
-}
+    res.status(200).json({ success: true, message: "Product Updated" })
 
-// 5. Delete Product
-exports.deleteProduct = async (req, res) => {
-    try {
-        const product = await Product.findByIdAndDelete(req.params.id)
-        if (!product)
-            return res.status(404).json({ success: false, error: "Product Not Found" })
+})
 
-        res.status(200).json({ success: true, message: "Product Deleted" })
+// 5. Delete Product -- Admin
+exports.deleteProduct = asyncError(async (req, res) => {
 
-    } catch (error) {
-        res.status(500).json(error)
+    const product = await Product.findByIdAndDelete(req.params.id)
+    if (!product)
+        return errorHandler(res, 404, "Product Not Found")
 
-    }
-}
+    res.status(200).json({ success: true, message: "Product Deleted" })
+
+})

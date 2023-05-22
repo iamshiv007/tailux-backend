@@ -9,8 +9,8 @@ const errorHandler = (
     })
 }
 
-const asyncError = (passesFunc) => (req, res) => {
-    return Promise.resolve(passesFunc(req, res)).catch((err) => {
+const asyncError = (passesFunc) => (req, res, next) => {
+    return Promise.resolve(passesFunc(req, res, next)).catch((err) => {
         return errorHandler(res, 500, err.message)
     })
 }

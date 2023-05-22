@@ -66,7 +66,7 @@ exports.register = asyncError(async (req, res) => {
             httpOnly: true
         }
 
-        res.cookie('token', token, options).status(200).json({ success: true, user })
+        res.cookie('token', token, options).status(200).json({ success: true, message: "Logged In successfully", user })
 
     }),
 

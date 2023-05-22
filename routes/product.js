@@ -20,7 +20,7 @@ const upload = multer({ storage })
 router.route("/admin/product/new").post(isAuthenticatedUser, authorizeRole, upload.array("images"), createProduct)
 router.route("/products").get(getAllProducts)
 router.route("/product/:id").get(getOneProductDetails)
-router.route("/admin/product/:id").patch(isAuthenticatedUser, authorizeRole, updateProduct)
+router.route("/admin/product/:id").patch(isAuthenticatedUser, authorizeRole, upload.array("images"), updateProduct)
 router.route("/admin/product/:id").delete(isAuthenticatedUser, authorizeRole, deleteProduct)
 
 module.exports = router

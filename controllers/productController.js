@@ -48,6 +48,7 @@ exports.getOneProductDetails = asyncError(async (req, res) => {
 // 4. Update Product -- Admin
 exports.updateProduct = asyncError(async (req, res) => {
 
+    console.log(req.files)
     const images = req.files.map((file) => file.filename)
 
     const product = await Product.findByIdAndUpdate(req.params.id, req.files.length !== 0 ? { ...req.body, images } : req.body)

@@ -2,13 +2,14 @@ const { asyncError } = require('../middleware/error')
 const Cart = require('../models/cart')
 
 // 1. Add to cart
-exports.addToCart = asyncError((req, res) => {
+exports.addToCart = asyncError(async (req, res) => {
 
     const userId = req.user._id
 
-    Cart.create({ ...req.body, user: userId })
-        .then((cart) => res.status(201).json({ success: true, cart }))
-        .catch((err) => res.status(500).json({ success: false, err }))
+    const cart = await Cart.create({ ...req.body, user: userId })
+
+    res.status(201).json({ success: true, message: "Item Addded to cart", cart })
+
 })
 
 // 2. Get User Cart List

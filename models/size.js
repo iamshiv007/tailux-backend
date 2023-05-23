@@ -6,6 +6,10 @@ const sizeSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
+    name: {
+        type: String,
+        required: true
+    },
     top: [{
         shoulder: {
             type: String,

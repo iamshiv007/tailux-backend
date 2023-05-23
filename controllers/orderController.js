@@ -1,21 +1,50 @@
-const { asyncError } = require('../middleware/error')
+const { asyncError, errorHandler } = require('../middleware/error')
 const Order = require('../models/order')
 
 // 1. Create New Order
-exports.newOrder = asyncError((req, res) => {
+exports.newOrder = asyncError(async (req, res) => {
+
     const userId = req.user._id
 
-    Order.create({ ...req.body, user: userId })
-        .then((order) => res.status(201).json({ success: true, order }))
-        .catch((error) => res.status(500).json({ success: false, error }))
+    const order = await Order.create({ ...req.body, user: userId })
+
+    res.status(201).json({ success: true, message: "Order Created", order })
+
 })
 
 // 2. Get User Orders
-exports.getUserOrders = asyncError((req, res) => {
-    Order.find({ user: req.user._id })
+exports.getUserOrders = asyncError(async (req, res) => {
+
+    const orders = await Order.find({ user: req.user._id })
         .populate("user")
-        .populate("product")
+        .populate("products.product")
         .populate("shippingInfo")
-        .then((orders) => res.status(200).json({ success: true, orders }))
-        .catch((error) => res.status(500).json({ success: false, error }))
+
+    res.status(200).json({ success: true, orders })
+
+})
+
+exports.updateOrder = asyncError(async (req, res) => {
+
+    const { id } = req.params
+
+    const updatedOrder = await Order.findByIdAndUpdate(id, req.body)
+
+    if (!updatedOrder)
+        return errorHandler(res, 404, 'Order Not Found')
+
+    res.status(200).json({ success: true, message: "Order Updated" })
+})
+
+exports.deleteOrder = asyncError(async (req, res) => {
+
+    const { id } = req.params
+
+    const deletedOrder = await Order.findByIdAndDelete(id)
+
+    if (!deletedOrder)
+        return errorHandler(res, 404, 'Order Not Found')
+
+    res.status(200).json({ success: true, message: "Order Deleted" })
+
 })

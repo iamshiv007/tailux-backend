@@ -6,7 +6,7 @@ const orderSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-    products: {
+    products: [{
         product: {
             type: mongoose.Schema.ObjectId,
             ref: "Product",
@@ -20,7 +20,7 @@ const orderSchema = new mongoose.Schema({
             type: Number,
             reuired: true
         }
-    },
+    }],
     shippingInfo: {
         type: mongoose.Schema.ObjectId,
         ref: "Address",
@@ -29,11 +29,7 @@ const orderSchema = new mongoose.Schema({
     paymentInfo: {
         id: {
             type: String,
-            required: true
-        },
-        status: {
-            type: String,
-            required: true
+            // required: true
         }
     },
     paidAt: {

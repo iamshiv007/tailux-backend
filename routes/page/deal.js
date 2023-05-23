@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 router.route("/deal/new").post(isAuthenticatedUser, authorizeRole, upload.array("dealImages"), newDeal)
-router.route("/deal/category/:categoryName").get(isAuthenticatedUser, authorizeRole, dealByCategory)
+router.route("/deal/category/:categoryName").get(dealByCategory)
 router.route("/deal/:id").patch(isAuthenticatedUser, authorizeRole, upload.array("dealImages"), updateDeal)
 router.route("/deal/:id").delete(isAuthenticatedUser, authorizeRole, deleteDeal)
 

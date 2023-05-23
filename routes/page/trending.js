@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 router.route("/trending/new").post(isAuthenticatedUser, authorizeRole, upload.array("trendingImages"), newTrending)
-router.route("/trending/category/:categoryName").get(isAuthenticatedUser, authorizeRole, trendingByCategory)
+router.route("/trending/category/:categoryName").get(trendingByCategory)
 router.route("/trending/:id").patch(isAuthenticatedUser, authorizeRole, upload.array("trendingImages"), updateTrending)
 router.route("/trending/:id").delete(isAuthenticatedUser, authorizeRole, deleteTrending)
 

@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 router.route("/carousel/new").post(isAuthenticatedUser, authorizeRole, upload.array("carouselImages"), newCarousel)
-router.route("/carousel/category/:categoryName").get(isAuthenticatedUser, authorizeRole, carouselByCategory)
+router.route("/carousel/category/:categoryName").get(carouselByCategory)
 router.route("/carousel/:id").patch(isAuthenticatedUser, authorizeRole, upload.array("carouselImages"), updateCarousel)
 router.route("/carousel/:id").delete(isAuthenticatedUser, authorizeRole, deleteCarousel)
 

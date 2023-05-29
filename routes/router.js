@@ -45,4 +45,8 @@ router.use('/', dealRouter)
 const trendingRouter = require('./page/trending')
 router.use('/', trendingRouter)
 
+// custom product
+const customProductRouter = require('./customProduct')
+router.use('/', customProductRouter)
+
 module.exports = router

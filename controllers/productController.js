@@ -41,7 +41,7 @@ exports.getOneProductDetails = asyncError(async (req, res) => {
     if (!product)
         return errorHandler(res, 404, "Product Not Found")
 
-        res.status(200).json({ success: true, product })
+    res.status(200).json({ success: true, product })
 
 })
 
@@ -68,4 +68,14 @@ exports.deleteProduct = asyncError(async (req, res) => {
 
     res.status(200).json({ success: true, message: "Product Deleted" })
 
+})
+
+// 6. Get Products By Category
+exports.productsByCategory = asyncError(async (req, res) => {
+
+    const category = req.params.category
+
+    const products = await Product.find({ category })
+
+    res.status(200).json({ success: true, products })
 })

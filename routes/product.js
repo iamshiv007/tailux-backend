@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const multer = require("multer")
 
-const { createProduct, getAllProducts, getOneProductDetails, updateProduct, deleteProduct } = require("../controllers/productController")
+const { createProduct, getAllProducts, getOneProductDetails, updateProduct, deleteProduct, productsByCategory } = require("../controllers/productController")
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth")
 
 // Image upload
@@ -22,5 +22,6 @@ router.route("/products").get(getAllProducts)
 router.route("/product/:id").get(getOneProductDetails)
 router.route("/admin/product/:id").patch(isAuthenticatedUser, authorizeRole, upload.array("images"), updateProduct)
 router.route("/admin/product/:id").delete(isAuthenticatedUser, authorizeRole, deleteProduct)
+router.route('/products/:category').get(productsByCategory)
 
 module.exports = router

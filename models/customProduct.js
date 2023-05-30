@@ -6,18 +6,13 @@ const customProductSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-    category: {
-        type: String,
-        required: true
-    },
     product: {
         type: mongoose.Schema.ObjectId,
         ref: "Product",
         required: true
     },
     designName: {
-        type: String,
-        required: true
+        type: String
     },
     fabric: {
         type: String,
@@ -31,7 +26,7 @@ const customProductSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    size: {
+    customSize: {
         type: mongoose.Schema.ObjectId,
         ref: "Size",
         required: true

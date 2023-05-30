@@ -27,7 +27,23 @@ const cartSchema = new mongoose.Schema({
     color: {
         type: String,
         required: true
+    },
+    designName:{
+        type:String
+    },
+    fabric:{
+        type:String
+    },
+    pattern:{
+        type:String
+    },
+    collarStyle:{
+        type:String
+    },
+    buttonsStyle:{
+        type:String
     }
+    
 })
 
 module.exports = mongoose.model("Cart", cartSchema)

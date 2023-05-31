@@ -14,11 +14,39 @@ const orderSchema = new mongoose.Schema({
         },
         quantity: {
             type: Number,
-            required: true
+            required: true,
+            default: 1
         },
         price: {
             type: Number,
             reuired: true
+        },
+        designName: {
+            type: String
+        },
+        fabric: {
+            type: String,
+
+        },
+        pattern: {
+            type: String,
+        },
+        color: {
+            type: String,
+            required: true
+        },
+        customSize: {
+            type: mongoose.Schema.ObjectId,
+            ref: "Size",
+        },
+        collarStyle: {
+            type: String,
+        },
+        buttonsStyle: {
+            type: String,
+        },
+        customProduct: {
+            type: Boolean
         }
     }],
     shippingInfo: {

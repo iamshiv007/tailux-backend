@@ -42,6 +42,9 @@ const cartSchema = new mongoose.Schema({
     },
     buttonsStyle: {
         type: String
+    },
+    customProduct: {
+        type: Boolean
     }
 
 })
